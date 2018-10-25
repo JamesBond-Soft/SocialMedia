@@ -1,0 +1,67 @@
+.footerContainer {
+    background-color: rgb(65,89,110);
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    .BtnContainer {
+        margin-bottom: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+            .postBtn {
+                background-color: #3a5063;
+                font-size: 20px;
+                padding: 8px 40px;
+                cursor: pointer;
+                border-radius: 4px;
+                cursor: pointer;
+                color: white;
+                &:hover {
+                    opacity: 0.5;
+                    background-color: #0066ff;
+                    color:white;
+                }
+            }
+
+            .previewTitle {
+                min-width: 200px;
+                background-color: white;
+                height: 36px;
+                color: black;
+                display: flex;
+                border-radius: 4px;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding: 0 5px;
+            }
+
+            .fileContainer {
+                display: flex;
+                align-items: center;
+                span {
+                    background-color: #3a5063;
+                    font-size: 25px;
+                    padding: 5px 13px;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    margin: 0 10px;
+                    cursor: pointer;
+                    &:hover {
+                        opacity:0.5;
+                        background-color: #0066ff;
+                        color:white;
+                    }
+                }
+            
+                input {
+                    display: none;
+                }
+             }
+
+    }
+}

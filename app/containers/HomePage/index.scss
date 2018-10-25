@@ -1,0 +1,49 @@
+/**
+// ------ HomePage Style--------- 
+*/
+
+.homepageContainer {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+     .container {
+        max-width: 700px;
+        margin: 0 auto;
+        .column {
+            margin: 0  50px;
+            display: flex;
+            justify-content: space-around;
+            .item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 200px;
+                height: 200px;
+                margin: 40px;
+                cursor: pointer;
+                opacity:0.8;
+                float:left;
+                position: relative;
+                i {
+                    padding-bottom: 30px;
+                    font-size: 60px;
+                }
+                .title {
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    text-align: center;
+                    background-color: rgba(0, 0, 0, 0.37);
+                    padding: 10px 0;
+                    font-size: 17px;
+                }
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+} 
+  
