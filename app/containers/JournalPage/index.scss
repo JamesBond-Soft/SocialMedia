@@ -1,0 +1,53 @@
+.JournalContainer {
+    .content {
+      
+        .tableContainer {
+            margin: 20px;
+            .sub_title {
+                text-align: center;
+                font-size: 22px;
+                margin-bottom: 15px;
+                position: relative;
+                .editListBtns {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .addBtn {
+                        cursor: pointer;
+                        font-size: 16px;
+                    }
+                    .editBtn {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        right: 25px;
+                        top: 0;
+                        position: absolute;
+                        cursor: pointer;
+                        margin-right: 15px;
+                        font-size: 15px;
+                    }
+                }
+            }
+            input {
+                text-align: center;
+                background-color: transparent;
+                text-align: center;
+                border: 0;
+                font-size: 15px;
+                outline: none;
+            }
+            textarea {
+                text-align: center;
+                background-color: transparent;
+                text-align: center;
+                border: 0;
+                font-size: 15px;
+                outline: none;
+            }
+        }
+    }
+}

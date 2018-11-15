@@ -23,18 +23,18 @@ class DocumentPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      postFileInfo:null 
+      postFileInfo: null
     };
     this.postDocument = this.postDocument.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-       console.log('changed');
+    console.log('changed');
   }
 
   postDocument(postFileInfo) {
     // ipcRenderer.send(POST_TEXT, this.state.postText);
-    if (postFileInfo) { 
+    if (postFileInfo) {
       this.props.dispatch(addDcoument(postFileInfo));
     }
   }
@@ -43,13 +43,13 @@ class DocumentPage extends Component {
     shell.openItem(item.path);
   }
 
-/*   renderItems() {
+  /*   renderItems() {
       const { documentInfos } = this.props;
-      documentInfos && 
+      documentInfos &&
       documentInfos.map((item, index) => {
          return (
          <div className = {styles.item}  onClick={() => this.openDocument(item)}>
-            <i className="fa fa-file-o fa-3x" /> 
+            <i className="fa fa-file-o fa-3x" />
             <div className={styles.title}> <span>{item.name}</span></div>
          </div> );
       })
@@ -59,22 +59,20 @@ class DocumentPage extends Component {
     const { documentInfos } = this.props;
     return (
       <div className={styles.documentpage}>
-         <Header title='Document'/>
-          <div className={styles.container}>
-              <div className={styles.content}>
-              {
-                documentInfos && 
-                documentInfos.map((item, index) => {
-                  return (
-                  <div key={index} className = {styles.item}  onClick={() => this.openDocument(item)}>
-                      <i className="fa fa-file-o fa-3x" /> 
-                      <div className={styles.title}> <span>{item.name}</span></div>
-                  </div> );
-                })
+        <Header title="Document" />
+        <div className={styles.container}>
+          <div className={styles.content}>
+            {
+                documentInfos &&
+                documentInfos.map((item, index) => (
+                  <div key={index} className={styles.item} onClick={() => this.openDocument(item)}>
+                    <i className="fa fa-file-o fa-3x" />
+                    <div className={styles.title}> <span>{item.name}</span></div>
+                  </div>))
               }
-              </div>
           </div>
-          <Footer  postMedia={this.postDocument} acceptFileTypes=".dox, .docx, .txt, .pdf"/>
+        </div>
+        <Footer postMedia={this.postDocument} acceptFileTypes=".dox, .docx, .txt, .pdf" />
       </div>
     );
   }

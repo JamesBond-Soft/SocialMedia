@@ -1,0 +1,57 @@
+.recordAudio {
+    .header {
+        display: flex;
+        padding: 0 20px;
+        justify-content: center;
+        align-items: center;
+        background-color: #41596e;
+        height: 60px;
+        .title {
+            font-size : 22px;
+        }
+        .backButton {
+            width: 30px;
+            left: 0;
+            margin-left: 20px;
+            position: absolute;
+            img {
+                width: 100%;
+                filter: invert(1);
+            }
+        }
+    }
+  
+    .recordContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 60px);
+        .videoContainer {
+            .voicebox {
+                width: 220px;
+                img {
+                    width: 100%;
+                }
+            }
+            .btnContainer {
+                text-align: center;
+                margin-top: 30px;
+                margin-left: 15px;
+                button {
+                    background-color: #3a5063;
+                    font-size: 18px;
+                    padding: 5px 19px;
+                    cursor: pointer;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    color: white;
+                    margin: 0 5px;
+                    border: 0;
+                    outline: none;
+                }
+            }
+        }
+       
+    }
+}

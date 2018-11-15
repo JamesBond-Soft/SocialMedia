@@ -1,0 +1,119 @@
+.profileContainer {
+    .header {
+        display: flex;
+        padding: 0 20px;
+        justify-content: center;
+        align-items: center;
+        background-color: #41596e;
+        height: 45px;
+        .title {
+            font-size : 20px;
+        }
+        .backButton {
+            width: 30px;
+            left: 0;
+            margin-left: 20px;
+            position: absolute;
+            img {
+                width: 100%;
+                filter: invert(1);
+            }
+        }
+    }
+    .content {
+        .avatarContainer {
+            display: flex;
+            justify-content: center;
+            margin-top: 5px;
+            position: relative;
+            .avatar {
+                width: 90px;
+                height: 90px;
+                background-size: cover;
+                position: relative;
+                .myImg {
+                    width: 100%;
+                    height: 100%;
+                    border-radius:50%;
+                    border: 2px solid #1579b1;
+                }
+                .uploadIcon {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    background-image: url('../../../resources/assets/images/uploadIcon.png');
+                    background-size: cover;
+                    cursor: pointer;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;    
+                    input {
+                        visibility: hidden;
+                    }    
+                }
+            }
+            .editBtn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                right: 25px;
+                top: 0;
+                position: absolute;
+                cursor: pointer;
+                i {
+                    margin-right: 3px;
+                }
+            }
+        }
+        
+        .nameContainer {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            input {
+                background-color: transparent;
+                text-align: center;
+                border: 0;
+                color: white;
+                font-size: 20px;
+                outline: none;
+                &::placeholder{
+                    color: white;
+                }
+            }
+        }
+
+        .tableContainer {
+            margin: 20px;
+            .sub_title {
+                text-align: center;
+                font-size: 22px;
+                margin-bottom: 15px;
+                position: relative;
+                .addBtn {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+            }
+            input {
+                text-align: center;
+                background-color: transparent;
+                text-align: center;
+                border: 0;
+                font-size: 15px;
+                outline: none;
+            }
+            textarea {
+                text-align: center;
+                background-color: transparent;
+                text-align: center;
+                border: 0;
+                font-size: 15px;
+                outline: none;
+            }
+        }
+    }
+}

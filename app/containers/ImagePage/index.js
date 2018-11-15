@@ -11,7 +11,6 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 
-
 type Props = {};
 
 class ImagePage extends Component {
@@ -19,18 +18,18 @@ class ImagePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      postFileInfo:null 
+      postFileInfo: null
     };
     this.postImage = this.postImage.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-       console.log('changed');
+    console.log('changed');
   }
 
   postImage(postFileInfo) {
     // ipcRenderer.send(POST_TEXT, this.state.postText);
-    if (postFileInfo) { 
+    if (postFileInfo) {
       this.props.dispatch(addImage(postFileInfo));
     }
   }
@@ -39,27 +38,28 @@ class ImagePage extends Component {
     shell.openItem(item.path);
   }
 
+  captureImage() {
+    this.props.history.push('/captureimage');
+  }
 
   render() {
     const { imageInfos } = this.props;
     return (
       <div className={styles.imagePage}>
-         <Header title='Image'/>
-          <div className={styles.container}>
-              <div className={styles.content}>
-              {
-                imageInfos && 
-                imageInfos.map((item, index) => {
-                  return (
-                  <div key={index} className = {styles.item}  onClick={() => this.openImage(item)}>
-                      <img src={item.path}/>
-                      <div className={styles.title}> <span>{item.name}</span></div>
-                  </div> );
-                })
+        <Header title="Image" />
+        <div className={styles.container}>
+          <div className={styles.content}>
+            {
+                imageInfos &&
+                imageInfos.map((item, index) => (
+                  <div key={index} className={styles.item} onClick={() => this.openImage(item)}>
+                    <img src={item.path} />
+                    <div className={styles.title}> <span>{item.name}</span></div>
+                  </div>))
               }
-              </div>
           </div>
-          <Footer  postMedia={this.postImage} acceptFileTypes=".png, .jpg, .jpeg"/>
+        </div>
+        <Footer postMedia={this.postImage} acceptFileTypes=".png, .jpg, .jpeg" create={this.captureImage.bind(this)} />
       </div>
     );
   }

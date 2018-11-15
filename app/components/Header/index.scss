@@ -5,9 +5,9 @@
         justify-content: space-between;
         align-items: center;
         background-color: rgb(65,89,110);
-        height: 60px;
+        height: 45px;
         .title {
-            font-size: 25px;
+            font-size: 20px;
         }
     
         .left {
@@ -45,23 +45,16 @@
     
         .featureBtnContainer {
             margin-left:50px;
-            input {
-                padding: 7px;
-                color: white;
-                background-color: rgb(58,80,99);
-                border: 0;
+            i {
+                margin: 10px;
+                font-size: 21px;
                 cursor: pointer;
-                outline:none;
-                font-size: 12px;
             }
-            .sortByNameBtn {
-                border-radius: 5px 0 0 5px;
-                background-color : white;
-                color: rgb(58,80,99);
-            }
-            .sortBySizeBtn {
-                border-radius: 0 5px 5px 0;
-            }
+          
+        }
+
+        .profileBox {
+            cursor: pointer;
         }
     }
    

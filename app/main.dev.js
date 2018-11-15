@@ -11,12 +11,31 @@
  * @flow
  */
 import { app, BrowserWindow, ipcMain } from 'electron';
- import MenuBuilder from './menu';
+import MenuBuilder from './menu';
+
+const path = require('path');
+
+const fs = require('fs');
 
 const {
   POST_TEXT,
-  POST_SUCCESS
-} = require('./utils/constants'); 
+  POST_SUCCESS,
+  SAVE_VIDEO_REQUEST,
+  SAVE_VIDEO_SUCCESS,
+  SAVE_VIDEO_FAILURE,
+  SAVE_AUDIO_REQUEST,
+  SAVE_AUDIO_SUCCESS,
+  SAVE_AUDIO_FAILURE,
+
+  SAVE_IMAGE_REQUEST,
+  SAVE_IMAGE_SUCCESS,
+  SAVE_IMAGE_FAILURE,
+
+  RECORD_VIDEO_PATH,
+  RECORD_AUDIO_PATH,
+  SAVE_IMAGE_PATH,
+  RECORD_MEDIA_BASIC_PATH
+} = require('./utils/constants');
 
 
 let mainWindow = null;
@@ -28,7 +47,6 @@ if (process.env.NODE_ENV === 'production') {
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
-  const path = require('path');
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 }
@@ -66,10 +84,55 @@ const installExtensions = async () => {
   });
 }); */
 
+if (!fs.existsSync(RECORD_MEDIA_BASIC_PATH)) {
+  fs.mkdir(RECORD_MEDIA_BASIC_PATH);
+}
 
 ipcMain.on(POST_TEXT, (event, arg) => {
   mainWindow.send(POST_SUCCESS, arg);
-});  
+});
+
+ipcMain.on(SAVE_VIDEO_REQUEST, (event, filename, buffer) => {
+  if (!fs.existsSync(RECORD_VIDEO_PATH)) {
+    fs.mkdir(RECORD_VIDEO_PATH);
+  }
+  const filePath = `${RECORD_VIDEO_PATH}/${filename}`;
+  fs.writeFile(filePath, buffer, err => {
+    if (err) {
+      event.sender.send(SAVE_VIDEO_FAILURE, err.message);
+    }
+    event.sender.send(SAVE_VIDEO_SUCCESS, filePath);
+  });
+});
+
+ipcMain.on(SAVE_AUDIO_REQUEST, (event, filename, buffer) => {
+  if (!fs.existsSync(RECORD_AUDIO_PATH)) {
+    fs.mkdir(RECORD_AUDIO_PATH);
+  }
+  const filePath = `${RECORD_AUDIO_PATH}/${filename}`;
+  fs.writeFile(filePath, buffer, err => {
+    if (err) {
+      event.sender.send(SAVE_AUDIO_FAILURE, err.message);
+    }
+    event.sender.send(SAVE_AUDIO_SUCCESS, filePath);
+  });
+});
+
+ipcMain.on(SAVE_IMAGE_REQUEST, (event, filename, buffer) => {
+  if (!fs.existsSync(SAVE_IMAGE_PATH)) {
+    fs.mkdir(SAVE_IMAGE_PATH);
+  }
+  const filePath = `${SAVE_IMAGE_PATH}/${filename}`;
+  const base64Data = buffer.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+  fs.writeFile(filePath, base64Data, 'base64', err => {
+    if (err) {
+      event.sender.send(SAVE_IMAGE_FAILURE, err.message);
+    }
+    // const absolutePath = path.join(__dirname, filePath);
+    event.sender.send(SAVE_IMAGE_SUCCESS, filePath);
+  });
+});
+
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
@@ -86,8 +149,8 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: 1300,
+    height: 1000
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -107,5 +170,5 @@ app.on('ready', async () => {
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();  
+  menuBuilder.buildMenu();
 });

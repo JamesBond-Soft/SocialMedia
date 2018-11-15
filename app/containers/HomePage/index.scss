@@ -1,49 +1,168 @@
 /**
 // ------ HomePage Style--------- 
 */
-
-.homepageContainer {
-    height: 100vh;
+%item {
     display: flex;
     justify-content: center;
     align-items: center;
+    width:150px;
+    height:150px;
+    margin: 20px;
+    cursor: pointer;
+    opacity:0.8;
+    float:left;
+    position: relative;
+    box-shadow: 5px 5px 8px 1px rgba(0,0,0,0.3);
+    i {
+        margin-bottom:  20px;
+    }
+    .title {
+       position: absolute;
+       bottom:0; 
+       width: 100%;
+       text-align: center;
+       background-color: rgba(0, 0, 0, 0.37);
+       padding: 5px 0;
+       font-size: 13px;
+    }
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.select {
+    border: 2px solid blue;
+    padding: 2px;
+}
+.selectBox {
+    position: absolute;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    top: -8px;
+    border: 1px solid blue;
+    i {
+        font-size: 20px;
+        color: blue;
+    }
+}
+.homepageContainer {
+    height: 100vh;
   
      .container {
-        max-width: 700px;
-        margin: 0 auto;
-        .column {
-            margin: 0  50px;
-            display: flex;
-            justify-content: space-around;
-            .item {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 200px;
-                height: 200px;
-                margin: 40px;
-                cursor: pointer;
-                opacity:0.8;
-                float:left;
-                position: relative;
-                i {
-                    padding-bottom: 30px;
-                    font-size: 60px;
+        .left_side {
+            width: 60%;
+            float: left;
+            .content {
+                height: calc(100vh - 100px);
+                overflow-y: scroll;
+              
+                .AudioItem {
+                    @extend %item;
+                    background-color: rgb(162, 60, 213);
                 }
-                .title {
-                    position: absolute;
-                    bottom: 0;
-                    width: 100%;
-                    text-align: center;
-                    background-color: rgba(0, 0, 0, 0.37);
-                    padding: 10px 0;
-                    font-size: 17px;
+                .VideoItem {
+                    @extend %item;
+                    background-color: rgb(250, 186, 69);
                 }
-                &:hover {
-                    opacity: 1;
+                .DocumentItem {
+                    @extend %item;
+                    background-color: red;
+                }
+                .ImageItem {
+                    @extend %item;
+                    img {
+                        object-fit: cover;
+                        width: 100%;
+                        height: 100%;   
+                    }
+                }
+                .OtherItem {
+                    @extend %item;
+                    background-color: green;
+                }
+            }
+        }   
+        .right_side {
+            width: 40%;
+            float: right;
+            .profileContainer {
+                .avatarContainer {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 20px;
+                    .avatar {
+                        width:115px;
+                        height:115px;
+                        background-size: cover;
+                        position: relative;
+                        .myImg {
+                            width: 100%;
+                            height: 100%;
+                            border-radius:50%;
+                            border: 2px solid #1579b1;
+                        }
+                        .uploadIcon {
+                            position: absolute;
+                            bottom: 0;
+                            right: 0;
+                            background-image: url('../../../resources/assets/images/uploadIcon.png');
+                            cursor: pointer;
+                            width: 38px;
+                            height: 38px;
+                            border-radius: 50%;    
+                            input {
+                                visibility: hidden;
+                            }    
+                        }
+                    }
+                }
+                .nameContainer {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 20px;
+                    input {
+                        background-color: transparent;
+                        text-align: center;
+                        border: 0;
+                        color: white;
+                        font-size: 20px;
+                        outline: none;
+                        &::placeholder{
+                            color: white;
+                        }
+                    }
+                }
+                .content {
+                    margin-top: 20px;
+                    .sub_title {
+                        text-align: center;
+                        font-size: 25px;
+                    }
                 }
             }
         }
-    }
+     }
 } 
-  
+  /* width */
+::-webkit-scrollbar {
+    width: 10px;
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888; 
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+    
+    
