@@ -23,10 +23,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import backImg from '../../../resources/assets/images/back.png';
-import avatarImg from '../../../resources/assets/images/avatar.png';
 import uploadIcon from '../../../resources/assets/images/uploadIcon.png';
 import { deleteRow, addRow, updateProfile } from '../../redux/actions/profile';
-import TablePaginationActionsWrapped from '../../components/TablePaginationActions';
 import AlertDialog from '../../components/Alert';
 import {
   findWithAttr } from '../../utils/common';
@@ -39,8 +37,6 @@ class JournalPage extends Component {
     super();
     this.state = {
       open: false,
-      page: 0,
-      rowsPerPage: 4,
       row: {},
       editMode: false,
       journalList: [],
@@ -63,14 +59,6 @@ class JournalPage extends Component {
       this.setState({ journalList });
     }
   }
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  }
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
 
   /**
    * Switch View to Edit Mode
@@ -164,57 +152,34 @@ class JournalPage extends Component {
       <div className={styles.JournalContainer}>
         <div className={styles.content} >
           <div className={styles.tableContainer}>
+
             <div className={styles.sub_title}>
-              <span>Journal</span>
-              <div className={styles.editListBtns} >
-                { this.state.editMode ?
-              (<div className={styles.editBtn} onClick={this.saveJournal.bind(this)}>
-                <i className="fa fa-save fa-2x" />
-               </div>) :
-              (<div className={styles.editBtn} onClick={this.switchEditMode.bind(this)}>
-                <i className="fa fa-edit fa-2x" />
-               </div>)
-            }
-                <div className={styles.addBtn} onClick={this.showAddJournalDialog.bind(this)} >
-                  <i className="fa fa-plus-circle fa-2x" />
-                </div>
+              { this.state.editMode ?
+                (<div className={styles.editBtn} onClick={this.saveJournal.bind(this)}>
+                  <i className="fa fa-save fa-x" />
+                  <span>Save</span>
+                </div>) :
+                (<div className={styles.editBtn} onClick={this.switchEditMode.bind(this)}>
+                  <i className="fa fa-edit fa-x" />
+                  <span>Edit</span>
+                </div>)
+              }
+              <span className={styles.title}>Journal</span>
+              <div className={styles.addBtn} onClick={this.showAddJournalDialog.bind(this)} >
+                {/* <i className="fa fa-plus-circle fa-2x" /> */}
+                ADD
               </div>
             </div>
-            <Paper >
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell
-                      width="20%"
-                      padding="none"
-                      style={{
-                      textAlign: 'center', fontSize: '20px', color: 'black'
-                      }}
-                    >Date/Time
-                    </TableCell>
-                    <TableCell
-                      padding="none"
-                      style={{
-                      textAlign: 'center', fontSize: '20px', color: 'black'
-                      }}
-                    > Content
-                    </TableCell>
-                    <TableCell
-                      padding="none"
-                      style={{
-                      textAlign: 'center', width: '20%', fontSize: '20px', color: 'black'
-                      }}
-                    >Action
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {journalList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+            <div className={styles.journalListContainer}>
+              <Paper >
+                <Table>
+                  <TableBody>
+                    {journalList.map(row => (
                     <TableRow key={row.id}>
-                      <TableCell padding="none" style={{ textAlign: 'center', width: '20%', fontWeight: '600' }}>
+                      {/*  <TableCell padding="none" style={{ textAlign: 'center', width: '20%'}}>
                         <input disabled type="text" value={row.created} />
-                      </TableCell>
-                      <TableCell padding="none" style={{ textAlign: 'center', fontWeight: '600' }}>
+                      </TableCell> */}
+                      <TableCell padding="none" style={{ textAlign: 'center' }}>
                         {
                           editMode ?
                             <textarea type="text" value={row.content} onChange={this.onChangeTableCell.bind(this, row.id)} /> :
@@ -231,28 +196,11 @@ class JournalPage extends Component {
                       </TableCell>
                     </TableRow>
                   ))}
-                  {emptyRows > 0 && (
-                  <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      colSpan={3}
-                      event={3}
-                      count={journalList.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      onChangePage={this.handleChangePage}
-                      onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                      ActionsComponent={TablePaginationActionsWrapped}
-                    />
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </Paper>
+                  </TableBody>
+                </Table>
+              </Paper>
+            </div>
+
           </div>
         </div>
         <Dialog

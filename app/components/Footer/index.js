@@ -146,35 +146,25 @@ class Footer extends Component {
     }
   };
 
-  
 
-  handleChange(e) {
+  handleChange = (e) => {
     const file = {};
     file.path = e.target.files[0].path;
     file.name = e.target.files[0].name;
     file.fileType = getFileType(file.name);
-    this.setState({ postFileInfo: file });
+    // this.setState({ postFileInfo: file });
+    this.props.postMedia(file);
   }
-
-  post() {
-    if (this.state.postFileInfo) {
-      // this.props.dispatch(addDcoument(this.state.postFileInfo));
-      this.props.postMedia(this.state.postFileInfo);
-      this.setState({ postFileInfo: null });
-    }
-  }
-
 
   render() {
+
     return (
       <div className={styles.footerContainer}>
         <div className={styles.BtnContainer}>
-          <div className={styles.previewTitle}>{this.state.postFileInfo ? this.state.postFileInfo.name : 'Attached File Name'}</div>
           <label className={styles.fileContainer}>
-            <span>...</span>
+            <span>Attach</span>
             <input type="file" onChange={this.handleChange.bind(this)} />
           </label>
-          <span className={styles.postBtn} onClick={this.post.bind(this)} >Post</span>
           <span className={styles.postBtn} onClick={this.handleClickOpen} >Record</span>
         </div>
 

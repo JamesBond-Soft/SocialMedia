@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Styles from './index.scss';
 import { shell } from 'electron';
-import avatarImg from '../../../resources/assets/images/avatar.png';
+import avatarImg from '../../../resources/assets/images/avatar.jpg';
 import uploadIcon from '../../../resources/assets/images/uploadIcon.png';
 import { setAvatar } from '../../redux/actions/profile';
 
@@ -43,6 +43,7 @@ const MediaItem = (Props) => {
       break;
     default:
       mediaStyle = Styles.OtherItem;
+      backIcon = 'fa fa-file-o fa-3x';
       break;
   }
   return (<div className={mediaStyle} onClick={Props.customClickEvent}>
@@ -53,7 +54,7 @@ const MediaItem = (Props) => {
     </div>
     }
     <div className={Styles.title}> <span>{Props.item.name}</span></div>
-  </div>);
+          </div>);
 };
 
 
@@ -170,6 +171,7 @@ class HomePage extends Component<Props> {
     return (
       <div className={Styles.homepageContainer}>
         <div className={Styles.container}>
+          <div className={Styles.toolbar} />
           <div className={Styles.left_side} >
             <Header title="Media" showAlert={this.showAlert.bind(this)} openItem={this.openItem.bind(this)} />
             <div className={Styles.content}>

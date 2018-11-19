@@ -8,7 +8,8 @@ const initialState = {
   avatarImage: null,
   profileName: null,
   rows: [],
-  lastId: 0
+  lastId: 0,
+  birthday:null
 };
 
 export default function profile(state = initialState, action = {}) {
@@ -47,7 +48,8 @@ export default function profile(state = initialState, action = {}) {
         ...state,
         rows: newProfile.messages,
         avatarImage: newProfile.avatar,
-        profileName: newProfile.profileName
+        profileName: newProfile.profileName,
+        birthday : newProfile.birthday
       });
     default:
       return state;

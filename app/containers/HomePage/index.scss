@@ -51,11 +51,15 @@
     height: 100vh;
   
      .container {
+        .toolbar {
+            height: 45px;
+            background-color: rgb(65,89,110);
+        }
         .left_side {
-            width: 60%;
+            width: 50%;
             float: left;
             .content {
-                height: calc(100vh - 100px);
+                height: calc(100vh - 130px);
                 overflow-y: scroll;
               
                 .AudioItem {
@@ -85,63 +89,8 @@
             }
         }   
         .right_side {
-            width: 40%;
+            width: 50%;
             float: right;
-            .profileContainer {
-                .avatarContainer {
-                    display: flex;
-                    justify-content: center;
-                    margin-top: 20px;
-                    .avatar {
-                        width:115px;
-                        height:115px;
-                        background-size: cover;
-                        position: relative;
-                        .myImg {
-                            width: 100%;
-                            height: 100%;
-                            border-radius:50%;
-                            border: 2px solid #1579b1;
-                        }
-                        .uploadIcon {
-                            position: absolute;
-                            bottom: 0;
-                            right: 0;
-                            background-image: url('../../../resources/assets/images/uploadIcon.png');
-                            cursor: pointer;
-                            width: 38px;
-                            height: 38px;
-                            border-radius: 50%;    
-                            input {
-                                visibility: hidden;
-                            }    
-                        }
-                    }
-                }
-                .nameContainer {
-                    display: flex;
-                    justify-content: center;
-                    margin-top: 20px;
-                    input {
-                        background-color: transparent;
-                        text-align: center;
-                        border: 0;
-                        color: white;
-                        font-size: 20px;
-                        outline: none;
-                        &::placeholder{
-                            color: white;
-                        }
-                    }
-                }
-                .content {
-                    margin-top: 20px;
-                    .sub_title {
-                        text-align: center;
-                        font-size: 25px;
-                    }
-                }
-            }
         }
      }
 } 

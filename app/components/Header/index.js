@@ -21,21 +21,15 @@ class Header extends Component {
     return (
       <div className={styles.headerContainer}>
         <div className={styles.container} data-tid="container">
-          <div className={styles.left}>
-            <div className={styles.searchBox}>
-              <img src={searchImg} />
-              <input type="text" />
+          <div className={styles.featureContainer}>
+            <div className={styles.title}>
+              <span>{title}</span>
             </div>
-          </div>
 
-          <div className={styles.title}>
-            <span>{title}</span>
-          </div>
-
-          <div className={styles.featureBtnContainer}>
-            <i className="fa fa-eye fa-2x" onClick={this.props.openItem} />
-            <i className="fa fa-trash fa-2x" onClick={this.props.showAlert} />
-            <i className="fa fa-share-alt fa-2x" />
+            <div className={styles.featureBtnContainer}>
+              <span className={styles.viewIcon} onClick={this.props.openItem}>VIEW</span>
+              <i className="fa fa-trash fa-2x" onClick={this.props.showAlert} />
+            </div>
           </div>
         </div>
       </div>

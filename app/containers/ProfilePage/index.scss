@@ -4,10 +4,9 @@
         padding: 0 20px;
         justify-content: center;
         align-items: center;
-        background-color: #41596e;
         height: 45px;
         .title {
-            font-size : 20px;
+            font-size : 25px;
         }
         .backButton {
             width: 30px;
@@ -21,65 +20,63 @@
         }
     }
     .content {
-        .avatarContainer {
-            display: flex;
-            justify-content: center;
-            margin-top: 5px;
-            position: relative;
-            .avatar {
-                width: 90px;
-                height: 90px;
-                background-size: cover;
+        .userInfo {
+            margin-bottom : 60px;
+            .avatarContainer {
+                padding: 0 20px;
+                margin-top: 5px;
                 position: relative;
-                .myImg {
-                    width: 100%;
-                    height: 100%;
-                    border-radius:50%;
-                    border: 2px solid #1579b1;
-                }
-                .uploadIcon {
-                    position: absolute;
-                    bottom: 0;
-                    right: 0;
-                    background-image: url('../../../resources/assets/images/uploadIcon.png');
+                .info {
+                    .nameContainer {
+                        input {
+                            background-color: transparent;
+                            border: 0;
+                            color: white;
+                            font-size: 20px;
+                            outline: none;
+                            &::placeholder{
+                                color: white;
+                            }
+                        }
+                    }
+                    .birthdayContainer {
+                        margin-top: 10px;
+                        .picker {
+                            * {
+                                color: white;
+                            }
+                        }
+                    }
+                }   
+                .avatar {
+                    width: 165px;
+                    height: 165px;
                     background-size: cover;
-                    cursor: pointer;
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;    
-                    input {
-                        visibility: hidden;
-                    }    
+                    position: absolute;
+                    right: 63px;
+                    top: -39px;
+                    .myImg {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 10%;
+                        border: 2px solid #1579b1;
+                    }
+                    .uploadIcon {
+                        position: absolute;
+                        bottom: -4px;
+                        right: -4px;
+                        background-image: url('../../../resources/assets/images/uploadIcon.png');
+                        background-size: cover;
+                        cursor: pointer;
+                        width: 35px;
+                        height: 35px;
+                        border-radius: 50%;    
+                        input {
+                            visibility: hidden;
+                        }    
+                    }
                 }
-            }
-            .editBtn {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                right: 25px;
-                top: 0;
-                position: absolute;
-                cursor: pointer;
-                i {
-                    margin-right: 3px;
-                }
-            }
-        }
-        
-        .nameContainer {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-            input {
-                background-color: transparent;
-                text-align: center;
-                border: 0;
-                color: white;
-                font-size: 20px;
-                outline: none;
-                &::placeholder{
-                    color: white;
-                }
+                
             }
         }
 
@@ -90,29 +87,57 @@
                 font-size: 22px;
                 margin-bottom: 15px;
                 position: relative;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .title {
+
+                }
                 .addBtn {
-                    position: absolute;
-                    right: 0;
-                    top: 0;
                     cursor: pointer;
                     font-size: 16px;
+                    border: 1px solid white;
+                    padding: 5px 10px;
                 }
+                .editBtn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    span {
+                        font-size: 16px;
+                    }
+                    cursor: pointer;
+                    i {
+                        margin-right: 3px;
+                        font-size: 25px;
+                    }
+                }
+            }
+            .messageListContainer {
+                height: 295px;
+                overflow-y: scroll;
+                background-color: #41596e;
+                border-radius: 5px;
             }
             input {
                 text-align: center;
                 background-color: transparent;
                 text-align: center;
                 border: 0;
-                font-size: 15px;
+                font-size: 13px;
                 outline: none;
+                font-family: sans-serif;
             }
             textarea {
                 text-align: center;
+                width: 100%;
                 background-color: transparent;
                 text-align: center;
                 border: 0;
-                font-size: 15px;
+                font-size: 17px;
+                font-weight: 600;
                 outline: none;
+                font-family: sans-serif;
             }
         }
     }
