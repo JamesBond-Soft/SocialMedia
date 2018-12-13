@@ -3,14 +3,20 @@ import MediaCapturer from 'react-multimedia-capture';
 import { ipcRenderer, shell } from 'electron';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addMedia } from '../../redux/actions/media';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { addMedia } from '../../redux/actions/timeline';
 import backImg from '../../../resources/assets/images/back.png';
 import recordVoice from '../../../resources/assets/images/voice_record.png';
 import styles from './index.scss';
 import {
   SAVE_AUDIO_REQUEST,
   SAVE_AUDIO_SUCCESS,
-  SAVE_AUDIO_FAILURE,
   AUDIO_FILE
 } from '../../utils/constants';
 
@@ -22,7 +28,10 @@ class RecordAudioPage extends React.Component {
       rejectedReason: '',
       recording: false,
       paused: false,
-      postFileInfo: null
+      postFileInfo: null,
+      description: null,
+      postDate: new Date().toISOString().slice(0, 10),
+      filePath: null
     };
 
     this.handleRequest = this.handleRequest.bind(this);
@@ -32,17 +41,12 @@ class RecordAudioPage extends React.Component {
     this.handleStop = this.handleStop.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handleResume = this.handleResume.bind(this);
-    this.postAudio = this.postAudio.bind(this);
     this.handleStreamClose = this.handleStreamClose.bind(this);
   }
 
   componentDidMount() {
-    console.log(' ------------ componentDidMount called ------------------------');
-    const $this = this;
     ipcRenderer.on(SAVE_AUDIO_SUCCESS, (event, path) => {
-      console.log(' -------------------------- SUCCESS ----------------------');
-      console.log(`Saved file ${path}`);
-      this.postAudio(path);
+      this.setState({ open_dialog: true, filePath: path });
     });
   }
 
@@ -50,15 +54,33 @@ class RecordAudioPage extends React.Component {
     ipcRenderer.removeAllListeners([SAVE_AUDIO_SUCCESS]);
   }
 
-  postAudio(path) {
-    const postFileInfo = this.state.postFileInfo;
-    postFileInfo.path = path;
-    postFileInfo.fileType = AUDIO_FILE;
-    if (postFileInfo) {
-      alert('Audio Successfully Saved');
+  /**
+   * Dialog Event handler
+  */
+  handleDialogClose = () => {
+    this.setState({ open_dialog: false });
+  }
+
+  handleDialogSubmit = () => {
+    const { description, postDate, filePath } = this.state;
+    if (description === null) {
+      alert('Description is required');
+    } else {
+      const postFileInfo = this.state.postFileInfo;
+      postFileInfo.path = filePath;
+      postFileInfo.fileType = AUDIO_FILE;
+      postFileInfo.description = description;
+      postFileInfo.postDate = postDate;
+      postFileInfo.favorited = false;
       this.props.dispatch(addMedia(postFileInfo));
+      this.setState({ open_dialog: false });
       this.props.history.push('/');
     }
+  }
+
+  _handleDialogValueChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   handleRequest() {
@@ -133,11 +155,9 @@ class RecordAudioPage extends React.Component {
   }
 
   render() {
-    const granted = this.state.granted;
-    const rejectedReason = this.state.rejectedReason;
-    const recording = this.state.recording;
-    const paused = this.state.paused;
-
+    const {
+      description, granted, rejectedReason, recording, paused
+    } = this.state;
     return (
       <div className={styles.recordAudio}>
         <div ref="app">
@@ -178,9 +198,44 @@ class RecordAudioPage extends React.Component {
                       { paused ? <button onClick={resume}>Resume</button> : <button onClick={pause}>Pause</button>}
                     </div>
                   </div>
-                </div>)
+                 </div>)
                       }
             />
+
+          <Dialog
+            open={this.state.open_dialog}
+            onClose={this.handleDialogClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Post Detail</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+              Please input post description and date.
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                name="description"
+                id="name"
+                label="Description"
+                type="text"
+                value={description}
+                onChange={this._handleDialogValueChange}
+                fullWidth
+                margin="normal"
+                multiline
+            />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleDialogClose} color="primary">
+              Cancel
+              </Button>
+              <Button onClick={this.handleDialogSubmit} color="primary">
+              Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+
         </div>
       </div>
     );
@@ -188,8 +243,8 @@ class RecordAudioPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { media } = state;
-  return { audioInfos: media.audioInfos };
+  const { timeline } = state;
+  return { mediaLists: timeline.mediaLists };
 }
 
 export default connect(mapStateToProps)(RecordAudioPage);

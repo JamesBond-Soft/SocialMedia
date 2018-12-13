@@ -1,5 +1,12 @@
 .headerContainer {
     .container{
+        .toolbar {
+            height: 60px;
+            background-color: rgb(65,89,110);
+            align-items: center;
+            display: flex;
+            padding: 0 15px;
+        }
         .featureContainer {
             margin-top: 15px;
             position: relative;

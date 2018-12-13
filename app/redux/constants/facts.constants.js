@@ -1,0 +1,5 @@
+export default {
+  ADD_MEDIA: 'FACTS_ADD_MEDIA',
+  DELETE_MEDIA: 'FACTS_DELETE_MEDIA',
+};
+

@@ -1,0 +1,43 @@
+.container {
+    display: flex
+}
+.leftContainer {
+    width: 40%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .content {
+        .titleContainer {
+            color: black;
+            text-align: center;
+        }
+        .formContainer {
+            display: flex;
+            flex-direction: column;
+            .btn {
+                margin-top: 30px;
+                width : 196px;
+            }
+            .error {
+                color: red;
+            }
+        }
+        .linkContainer {
+            margin-top: 40px;
+            color: black;
+            p {
+                font-size: 13px;
+                text-align: center;
+                span {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+.rightContainer {
+    width: 60%;
+    background-color: green;
+}

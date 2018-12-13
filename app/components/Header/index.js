@@ -16,11 +16,17 @@ class Header extends Component {
     };
   }
 
+  openItem = (param) => (e) => {
+    console.log(' open Item : ', param);
+    console.log(' event : ', e);
+  }
+
   render() {
     const { title } = this.props;
     return (
       <div className={styles.headerContainer}>
         <div className={styles.container} data-tid="container">
+          <div className={styles.toolbar} />
           <div className={styles.featureContainer}>
             <div className={styles.title}>
               <span>{title}</span>

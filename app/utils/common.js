@@ -32,3 +32,40 @@ export function findWithAttr(array, attr, value) {
   }
   return -1;
 }
+
+
+export const ID_TOKEN = 'id_token';
+export const USER_PROFILE = 'user_profile';
+
+/**
+ * Handle for store and load, remove token in Local storage
+ * @param {*} idToken
+ */
+export function setIdToken(idToken) {
+  localStorage.setItem(ID_TOKEN, idToken);
+}
+
+export function removeIdToken() {
+  localStorage.removeItem(ID_TOKEN);
+}
+
+export function loadIdToken() {
+  return localStorage.getItem(ID_TOKEN);
+}
+
+/**
+ * Handle for storing, loading , remove User data in local storage
+ */
+export function loadUserProfile() {
+  return localStorage.getItem(USER_PROFILE);
+}
+
+export function saveUserProfile(user) {
+  console.log('User profile is saved into local storage');
+  localStorage.setItem(USER_PROFILE, JSON.stringify(user));
+}
+
+export function removeUserProfile() {
+  localStorage.removeItem(USER_PROFILE);
+}
+

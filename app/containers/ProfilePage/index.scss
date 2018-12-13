@@ -1,4 +1,35 @@
 .profileContainer {
+    .toolbar {
+        .info {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #41596e;
+            height: 60px;
+            .nameContainer {
+                input {
+                    background-color: transparent;
+                    border: 0;
+                    color: white;
+                    font-size: 20px;
+                    outline: none;
+                    &::placeholder{
+                        color: #BAB7B7;
+
+                    }
+                }
+            }
+            .birthdayContainer {
+                margin-top: 10px;
+                .picker {
+                    * {
+                        color: white;
+                    }
+                }
+            }
+        }   
+    }
     .header {
         display: flex;
         padding: 0 20px;
@@ -21,58 +52,34 @@
     }
     .content {
         .userInfo {
-            margin-bottom : 60px;
             .avatarContainer {
                 padding: 0 20px;
                 margin-top: 5px;
                 position: relative;
-                .info {
-                    .nameContainer {
-                        input {
-                            background-color: transparent;
-                            border: 0;
-                            color: white;
-                            font-size: 20px;
-                            outline: none;
-                            &::placeholder{
-                                color: white;
-                            }
-                        }
-                    }
-                    .birthdayContainer {
-                        margin-top: 10px;
-                        .picker {
-                            * {
-                                color: white;
-                            }
-                        }
-                    }
-                }   
-                .avatar {
-                    width: 165px;
-                    height: 165px;
+             .avatar {
+                    height: 210px;
                     background-size: cover;
-                    position: absolute;
                     right: 63px;
                     top: -39px;
                     .myImg {
                         width: 100%;
                         height: 100%;
-                        border-radius: 10%;
-                        border: 2px solid #1579b1;
+                        border: 1px solid #1579b1;
+                        object-fit: cover;
                     }
                     .uploadIcon {
                         position: absolute;
-                        bottom: -4px;
-                        right: -4px;
+                        bottom: 2px;
+                        left: 25px;
                         background-image: url('../../../resources/assets/images/uploadIcon.png');
                         background-size: cover;
                         cursor: pointer;
-                        width: 35px;
-                        height: 35px;
+                        width: 40px;
+                        height: 40px;
                         border-radius: 50%;    
                         input {
                             visibility: hidden;
+                            width: 0;
                         }    
                     }
                 }
@@ -114,7 +121,7 @@
                 }
             }
             .messageListContainer {
-                height: 295px;
+                height: 245px;
                 overflow-y: scroll;
                 background-color: #41596e;
                 border-radius: 5px;

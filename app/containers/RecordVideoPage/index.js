@@ -3,7 +3,14 @@ import MediaCapturer from 'react-multimedia-capture';
 import { ipcRenderer, shell } from 'electron';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addMedia } from '../../redux/actions/media';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { addMedia } from '../../redux/actions/timeline';
 import backImg from '../../../resources/assets/images/back.png';
 import styles from './index.scss';
 import {
@@ -21,7 +28,11 @@ class RecordVideoPage extends React.Component {
       rejectedReason: '',
       recording: false,
       paused: false,
-      postFileInfo: null
+      postFileInfo: null,
+      open_dialog: false,
+      description: null,
+      postDate: new Date().toISOString().slice(0, 10),
+      filePath: null
     };
 
     this.handleRequest = this.handleRequest.bind(this);
@@ -34,16 +45,12 @@ class RecordVideoPage extends React.Component {
     this.handleStreamClose = this.handleStreamClose.bind(this);
     this.setStreamToVideo = this.setStreamToVideo.bind(this);
     this.releaseStreamFromVideo = this.releaseStreamFromVideo.bind(this);
-    this.postVideo = this.postVideo.bind(this);
   }
 
   componentDidMount() {
-    console.log(' ------------ componentDidMount called ------------------------');
-    const $this = this;
     ipcRenderer.on(SAVE_VIDEO_SUCCESS, (event, path) => {
-      console.log(' -------------------------- SUCCESS ----------------------');
-      console.log(`Saved file ${path}`);
-      this.postVideo(path);
+      this.setState({ open_dialog: true, filePath: path });
+
     });
   }
 
@@ -51,15 +58,33 @@ class RecordVideoPage extends React.Component {
     ipcRenderer.removeAllListeners([SAVE_VIDEO_SUCCESS]);
   }
 
-  postVideo(path) {
-    const postFileInfo = this.state.postFileInfo;
-    postFileInfo.path = path;
-    postFileInfo.fileType = VIDEO_FILE;
-    if (postFileInfo) {
-      alert('Video Successfully Saved');
+  /**
+   * Dialog Event handler
+  */
+  handleDialogClose = () => {
+    this.setState({ open_dialog: false });
+  }
+
+  handleDialogSubmit = () => {
+    const { description, postDate, filePath } = this.state;
+    if (description === null) {
+      alert('Description is required');
+    } else {
+      const postFileInfo = this.state.postFileInfo;
+      postFileInfo.path = filePath;
+      postFileInfo.fileType = VIDEO_FILE;
+      postFileInfo.description = description;
+      postFileInfo.postDate = postDate;
+      postFileInfo.favorited = false;
       this.props.dispatch(addMedia(postFileInfo));
+      this.setState({ open_dialog: false });
       this.props.history.push('/');
     }
+  }
+
+  _handleDialogValueChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   }
 
   handleRequest() {
@@ -92,12 +117,13 @@ class RecordVideoPage extends React.Component {
 
     this.releaseStreamFromVideo();
     console.log('Recording Stopped.');
+    // Save recorded file into Device
+
     this.saveBlob(blob);
   }
 
   handlePause() {
     this.releaseStreamFromVideo();
-
     this.setState({
       paused: true
     });
@@ -139,6 +165,7 @@ class RecordVideoPage extends React.Component {
   saveBlob(blob) {
     const reader = new FileReader();
     const $this = this;
+
     reader.onload = function () {
       if (reader.readyState == 2) {
         const buffer = new Buffer(reader.result);
@@ -157,11 +184,9 @@ class RecordVideoPage extends React.Component {
   }
 
   render() {
-    const granted = this.state.granted;
-    const rejectedReason = this.state.rejectedReason;
-    const recording = this.state.recording;
-    const paused = this.state.paused;
-
+    const {
+      description, granted, rejectedReason, recording, paused
+    } = this.state;
     return (
       <div className={styles.recordVideo}>
         <div ref="app">
@@ -200,9 +225,44 @@ class RecordVideoPage extends React.Component {
                       { paused ? <button onClick={resume}>Resume</button> : <button onClick={pause}>Pause</button>}
                     </div>
                   </div>
-                </div>)
+                 </div>)
                       }
             />
+
+          <Dialog
+            open={this.state.open_dialog}
+            onClose={this.handleDialogClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Post Detail</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+              Please input post description and date.
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                name="description"
+                id="name"
+                label="Description"
+                type="text"
+                value={description}
+                onChange={this._handleDialogValueChange}
+                fullWidth
+                margin="normal"
+                multiline
+            />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleDialogClose} color="primary">
+              Cancel
+              </Button>
+              <Button onClick={this.handleDialogSubmit} color="primary">
+              Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+
         </div>
       </div>
     );
@@ -210,8 +270,8 @@ class RecordVideoPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { media } = state;
-  return { videoInfos: media.videoInfos };
+  const { timeline } = state;
+  return { mediaLists: timeline.mediaLists };
 }
 
 export default connect(mapStateToProps)(RecordVideoPage);
