@@ -7,7 +7,7 @@ import { updateProfile } from '../../redux/actions/profile';
 import ImageCarousel from '../../components/ImageCarousel';
 import styles from './index.scss';
 
-class ProfilePage extends Component {
+class Profile extends Component {
   constructor() {
     super();
     this.state = {
@@ -158,10 +158,10 @@ class ProfilePage extends Component {
 }
 
 function mapStateToProps(state) {
-  const { profile, timeline, facts } = state;
+  const { profile } = state;
   return {
-    profileName: profile.profileName, birthday: profile.birthday, timelineMediaList: timeline.mediaList, factsMediaList: facts.mediaList
+    profileName: profile.profileName, birthday: profile.birthday
   };
 }
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps)(Profile);

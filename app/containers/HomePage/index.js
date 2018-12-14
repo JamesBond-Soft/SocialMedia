@@ -1,8 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Styles from './index.scss';
-import ProfilePage from '../ProfilePage';
+import Profile from '../../components/Profile';
 import Timeline from '../../components/Timeline';
 import Media from '../../components/Media';
 import Facts from '../../components/Facts';
@@ -22,7 +21,7 @@ export default class HomePage extends Component<Props> {
             <Media />
           </div>
           <div className={Styles.profile} >
-            <ProfilePage />
+            <Profile />
           </div>
         </div>
       </div>
